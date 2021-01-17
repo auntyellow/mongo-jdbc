@@ -1,5 +1,7 @@
-*~
-*.class
-.DS_Store
-build
-testoutput
+# Eclipse Files #
+.settings
+.project
+.classpath
+
+# Maven Files #
+/target
