@@ -16,17 +16,21 @@
  *   limitations under the License.
  */
 
-package com.mongodb.jdbc;
+package com.xqbase.mongodb.jdbc;
 
 import java.sql.*;
 
 public class MongoSQLException extends SQLException {
-    public MongoSQLException( String msg ){
+	private static final long serialVersionUID = 1L;
+
+	public MongoSQLException( String msg ) {
         super( msg );
     }
     
     public static class BadSQL extends MongoSQLException {
-        BadSQL( String sql ){
+		private static final long serialVersionUID = 1L;
+
+		BadSQL( String sql ) {
             super( "bad sql: " + sql );
         }
     }

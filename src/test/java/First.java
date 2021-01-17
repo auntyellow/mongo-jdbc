@@ -2,20 +2,16 @@
 
 import java.sql.*;
 
-public class first {
-
-    static void print( String name , ResultSet res )
-        throws SQLException {
+public class First {
+    static void print( String name , ResultSet res ) throws SQLException {
         System.out.println( name );
-        while ( res.next() ){
+        while ( res.next() ) {
             System.out.println( "\t" + res.getString( "name" ) + "\t" + res.getInt( "age" ) + "\t" + res.getObject(0) );
         }
     }
 
-    public static void main( String args[] )
-        throws SQLException , ClassNotFoundException {
-        
-        Class.forName( "com.mongodb.jdbc.MongoDriver" );
+    public static void main( String args[] ) throws SQLException , ClassNotFoundException {
+        Class.forName( "com.xqbase.mongodb.jdbc.MongoDriver" );
         
         Connection c = DriverManager.getConnection( "mongodb://localhost/exampledb" );
 

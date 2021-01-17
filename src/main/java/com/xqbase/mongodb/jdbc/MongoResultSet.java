@@ -16,20 +16,24 @@
  *   limitations under the License.
  */
 
-package com.mongodb.jdbc;
+package com.xqbase.mongodb.jdbc;
 
 import java.io.*;
 import java.net.*;
 import java.sql.*;
 import java.util.*;
+
+import org.bson.Document;
+
 import java.sql.Date;
 import java.math.*;
 
 import com.mongodb.*;
+import com.mongodb.client.FindIterable;
 
 public class MongoResultSet implements ResultSet {
 
-    MongoResultSet( DBCursor cursor ){
+    MongoResultSet( FindIterable<Document> cursor ){
         _cursor = cursor;
         _fields.init( cursor.getKeysWanted() );
     }
@@ -636,7 +640,7 @@ public class MongoResultSet implements ResultSet {
 
     // moving throgh cursor
     
-    public boolean next(){
+    public boolean next() {
         if ( ! _cursor.hasNext() ){
             return false;
         }
@@ -646,7 +650,7 @@ public class MongoResultSet implements ResultSet {
 
     // members
 
-    final DBCursor _cursor;
+    final FindIterable<Document> _cursor;
     final FieldLookup _fields = new FieldLookup();
     DBObject _cur;
     int _row = 0;
@@ -691,6 +695,18 @@ public class MongoResultSet implements ResultSet {
         final Map<Integer,String> _ids = new HashMap<Integer,String>();
         final Map<String,Integer> _strings = new HashMap<String,Integer>();
     }
+
+	@Override
+	public <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 }

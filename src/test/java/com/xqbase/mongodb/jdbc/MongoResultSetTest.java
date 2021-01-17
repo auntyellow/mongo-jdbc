@@ -1,14 +1,19 @@
 // MongoResultSetTest.java
 
-package com.mongodb.jdbc;
+package com.xqbase.mongodb.jdbc;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 import com.mongodb.*;
-import org.testng.annotations.Test;
+import com.xqbase.mongodb.jdbc.MongoResultSet;
 
 public class MongoResultSetTest extends Base {
-
     @Test
-    public void testbasic1(){
+    public void testbasic1() {
         DBCollection c = _db.getCollection( "rs.basic1" );
         c.drop();
 
@@ -26,7 +31,7 @@ public class MongoResultSetTest extends Base {
     }
 
     @Test
-    public void testorder1(){
+    public void testorder1() {
         DBCollection c = _db.getCollection( "rs.basic1" );
         c.drop();
 
@@ -51,6 +56,4 @@ public class MongoResultSetTest extends Base {
         assertEquals( "bar" , res.getString(1) );
         assertFalse( res.next() );
     }
-
-    
 }
