@@ -24,14 +24,14 @@ public class MongoSQLException extends SQLException {
 	private static final long serialVersionUID = 1L;
 
 	public MongoSQLException( String msg ) {
-        super( msg );
-    }
-    
-    public static class BadSQL extends MongoSQLException {
+		super( msg );
+	}
+	
+	public static class BadSQL extends MongoSQLException {
 		private static final long serialVersionUID = 1L;
 
 		BadSQL( String sql ) {
-            super( "bad sql: " + sql );
-        }
-    }
+			super( "bad sql: " + sql );
+		}
+	}
 }

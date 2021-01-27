@@ -26,59 +26,60 @@ import com.mongodb.*;
 
 public class MongoDriver implements Driver {
 
-    static final String PREFIX = "jdbc:mongodb://";
+	static final String PREFIX = "jdbc:mongodb://";
 
-    public MongoDriver() {/**/}
+	public MongoDriver() {/**/}
 
-    @Override
+	@Override
 	public boolean acceptsURL(String url) {
-        return url.startsWith( PREFIX );
-    }
-    
-    @Override
+		return url.startsWith( PREFIX );
+	}
+
+	@Override
 	public Connection connect(String url, Properties info) throws SQLException {
-        if ( info != null && info.size() > 0 )
-            throw new UnsupportedOperationException( "properties not supported yet" );
+		if ( info != null && info.size() > 0 ) {
+			throw new UnsupportedOperationException( "properties not supported yet" );
+		}
 
-        // Remove "jdbc:"
-        MongoClientURI uri = new MongoClientURI(url.substring(5));
-        return new MongoConnection(new MongoClient(uri).getDatabase(uri.getDatabase()));
-    }
-    
-    @Override
-    public int getMajorVersion() {
-        return 0;
-    }
+		// Remove "jdbc:"
+		MongoClientURI uri = new MongoClientURI(url.substring(5));
+		return new MongoConnection(new MongoClient(uri), uri.getDatabase());
+	}
 
-    @Override
-    public int getMinorVersion() {
-        return 1;
-    }
+	@Override
+	public int getMajorVersion() {
+		return 0;
+	}
 
-    @Override
-    public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) {
-        throw new UnsupportedOperationException( "getPropertyInfo doesn't work yet" );
-    }
+	@Override
+	public int getMinorVersion() {
+		return 1;
+	}
 
-    @Override
-    public boolean jdbcCompliant() {
-        return false;
-    }
+	@Override
+	public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) {
+		throw new UnsupportedOperationException( "getPropertyInfo doesn't work yet" );
+	}
 
-    public static void install() {
-        // NO-OP, handled in static
-    }
+	@Override
+	public boolean jdbcCompliant() {
+		return false;
+	}
 
-    static {
-        try {
-            DriverManager.registerDriver( new MongoDriver() );
-        } catch ( SQLException e ) {
-            throw new RuntimeException( e );
-        }
-    }
+	public static void install() {
+		// NO-OP, handled in static
+	}
 
-    @Override
-    public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-        throw new SQLFeatureNotSupportedException();
-    }
+	static {
+		try {
+			DriverManager.registerDriver( new MongoDriver() );
+		} catch ( SQLException e ) {
+			throw new RuntimeException( e );
+		}
+	}
+
+	@Override
+	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+		throw new SQLFeatureNotSupportedException();
+	}
 }

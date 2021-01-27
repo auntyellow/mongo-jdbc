@@ -2,30 +2,31 @@
 
 package com.xqbase.mongodb.jdbc;
 
+import org.bson.Document;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.mongodb.*;
+import com.mongodb.client.MongoCollection;
 import com.xqbase.mongodb.jdbc.Executor;
 
 public class BasicTest extends Base {
-    public BasicTest() {/**/}
-    
-    @Test
-    public void test1() throws Exception {
-        String name = "simple.test1";
-        DBCollection c = _db.getCollection( name );
-        c.drop();
+	public BasicTest() {/**/}
+	
+	@Test
+	public void test1() throws Exception {
+		String name = "simple.test1";
+		MongoCollection<Document> c = _db.getCollection( name );
+		c.drop();
 
-        for ( int i=1; i<=3; i++ ) {
-            c.insert( BasicDBObjectBuilder.start( "a" , Integer.valueOf(i) ).add( "b" , Integer.valueOf(i) ).add( "x" , Integer.valueOf(i) ).get() );
-        }
+		for ( int i=1; i<=3; i++ ) {
+			c.insertOne(__("a", __(i), "b", __(i), "x", __(i)));
+		}
 
-        DBObject empty = new BasicDBObject();
-        DBObject ab = BasicDBObjectBuilder.start( "a" , Integer.valueOf(1) ).add( "b" , Integer.valueOf(1) ).get();
+		Document empty = __();
+		Document ab = __("a", __(1), "b", __(1));
 
-        Assert.assertEquals( c.find().toArray() , new Executor( _db , "select * from " + name ).query().toArray() );
-        Assert.assertEquals( c.find( empty , ab ).toArray(), new Executor( _db , "select a,b from " + name ).query().toArray() );
-        Assert.assertEquals( c.find( new BasicDBObject( "x" , Integer.valueOf(3) ) , ab ).toArray() , new Executor( _db , "select a,b from " + name + " where x=3" ).query().toArray() );
-    }
+		Assert.assertEquals(__(c.find()), __(new Executor(_db, "select * from " + name ).query()));
+		Assert.assertEquals(__(c.find(empty).projection(ab)), __(new Executor( _db , "select a,b from " + name ).query()));
+		Assert.assertEquals(__(c.find(__("x", __(3))).projection(ab)), __(new Executor( _db , "select a,b from " + name + " where x=3" ).query()));
+	}
 }
