@@ -1,6 +1,7 @@
 // blog.java
 
 import java.sql.*;
+import java.util.Arrays;
 
 import com.xqbase.mongodb.jdbc.Base;
 import com.xqbase.mongodb.jdbc.MongoConnection;
@@ -26,12 +27,12 @@ public class Blog {
 
 		try (PreparedStatement ps = c.prepareStatement( "insert into blogposts ( title , tags , num ) values ( ? , ? , ? )" )) {
 			ps.setString( 1 , "first post!" );
-			ps.setObject( 2 , new String[]{ "fun" , "eliot" } );
+			ps.setObject( 2 , Arrays.asList("fun" , "eliot"));
 			ps.setInt( 3 , 1 );
 			ps.executeUpdate();
 
 			ps.setString( 1 , "wow - this is cool" );
-			ps.setObject( 2 , new String[]{ "eliot" , "bar" } );
+			ps.setObject( 2 , Arrays.asList("eliot" , "bar"));
 			ps.setInt( 3 , 2 );
 			ps.executeUpdate();
 		}
